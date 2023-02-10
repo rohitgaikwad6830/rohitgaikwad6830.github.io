@@ -5,12 +5,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { WebOtpDirective } from './web-otp-directive.directive';
+// import { WebOtpDirective } from './web-otp-directive.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WebOtpDirective,
+    // WebOtpDirective,
   ],
   imports: [
     BrowserModule, 
