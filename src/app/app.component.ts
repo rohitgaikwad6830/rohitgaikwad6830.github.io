@@ -6,7 +6,7 @@ import { SwUpdate } from '@angular/service-worker';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   title = 'ng-otp-auto-read';
   constructor(private readonly updates: SwUpdate) {
     if (this.updates.isEnabled) {
@@ -17,9 +17,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
-  errorMessage: any = '';
-  ngAfterViewInit() {
+  ngOnInit() {
     this.errorMessage = 'in ngAfterViewInit';
     if ('OTPCredential' in window) {
       this.mainObj.isWebOtpSupported = true;
@@ -57,6 +55,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.errorMessage = 'out of otp window';
     }
   }
+  errorMessage: any = '';
+  
   myOTP: any;
   myOTP2:any;
   mainObj: any = {};
