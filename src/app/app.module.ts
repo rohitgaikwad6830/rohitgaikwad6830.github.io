@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 // import { WebOtpDirective } from './web-otp-directive.directive';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { environment } from '../environments/environment';
     // WebOtpDirective,
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
+    NgxDocViewerModule,
     FormsModule, ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: environment.production,
   // Register the ServiceWorker as soon as the application is stable

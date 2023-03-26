@@ -6,12 +6,12 @@
         <label *ngIf="!mainObj.isWebOtpSupported" style="color: red;">
             Web OTP API not supported, Please enter manually.
         </label>
-      </div> 
+      </div>
         <div>
           Process Exp: Send an SMS that includes <br>
           <pre><code>
               Your OTP is: 123456.
-              @rohit3230.github.io #12345</code></pre> to this phone.
+              @rohitgaikwad6830.github.io #12345</code></pre> to this phone.
         </div>
         <div style="border:1px solid; padding: 5px; margin: 10px 0;">
           <form action="ngPwaApp/test" method="post">
@@ -27,9 +27,9 @@
         </div>
   </div>
 
-  
+
   <!-- <div>Web OTP Directive <br><br>
-    <input appWebOtp type="text"  inputmode="numeric" 
+    <input appWebOtp type="text"  inputmode="numeric"
     [(ngModel)]="myOTP2" autofocus >
     </div> -->
     <!-- <div>Dep</div> -->
@@ -37,3 +37,11 @@
     <code [innerHTML]="code"></code>
   </pre> -->
 </div>
+
+
+<ngx-doc-viewer
+  [url]="'https://drive.google.com/file/d/0B5ImRpiNhCfGZDVhMGEyYmUtZTdmMy00YWEyLWEyMTQtN2E2YzM3MDg3MTZh/preview'"
+  viewer="url"
+  style="width:100%;height:50vh;"
+>
+</ngx-doc-viewer>
