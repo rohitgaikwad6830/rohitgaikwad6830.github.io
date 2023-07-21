@@ -30,21 +30,42 @@ export class AppComponent implements OnInit {
         if (!input) return;
         const ac = new AbortController();
         var reqObj = {
-          otp: { transport: ['sms'] },
+          otp: { transport: ['sms'], message: 'Your OTP is: ([0-9]{6})'}, // Replace the regex with your desired format
           signal: ac.signal,
         };
         navigator.credentials
           .get(reqObj)
           .then((otp: any) => {
-            this.errorMessage = 'in otp credentials';
-            alert('GOT OTP***' + otp);
             if (otp) {
-              if (otp && otp.code) {
+              this.errorMessage = 'in otp credentials';
+              const otpRegex = /Your OTP is: ([0-9]{6})/; // Replace the regex with your desired format
+              const match = otpRegex.exec(otp.toString());
+              alert('GOT OTP***' + otp);
+              alert('Got match'+ match)
+              if (match && match[1]) {
+                const extractedOTP = match[1];
+                // Do something with the extractedOTP, e.g., assign it to an input field
+                (document.getElementById("otpInputId") as HTMLInputElement).value = extractedOTP;
+                this.myOTP = extractedOTP;
+                // Trigger the OTP submission, if needed
+                (document?.getElementById("otpButtonId") as any)?.click();
                 alert('GOT OTP***' + otp.code);
-                this.myOTP = otp.code;
+              } else {
+                // Handle the case when OTP format doesn't match
+                this.errorMessage = 'OTP format not recognized.';
               }
             }
           })
+          // .then((otp: any) => {
+          //   this.errorMessage = 'in otp credentials';
+          //   alert('GOT OTP***' + otp);
+          //   if (otp) {
+          //     if (otp && otp.code) {
+          //       alert('GOT OTP***' + otp.code);
+          //       this.myOTP = otp.code;
+          //     }
+          //   }
+          // })
           .catch((err) => {
             this.errorMessage = 'in otp error';
             console.log(err);
@@ -56,7 +77,7 @@ export class AppComponent implements OnInit {
     }
   }
   errorMessage: any = '';
-  
+
   myOTP: any;
   myOTP2:any;
   mainObj: any = {};
