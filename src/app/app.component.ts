@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
         const input = document.querySelector(
           'input[autocomplete="one-time-code"]'
         );
+        alert("above the return");
         if (!input) return;
         const ac = new AbortController();
         debugger
