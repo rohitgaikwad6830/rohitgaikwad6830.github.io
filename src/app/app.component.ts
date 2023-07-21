@@ -19,24 +19,34 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.errorMessage = 'in ngAfterViewInit';
+    console.log('step 1');
     if ('OTPCredential' in window) {
+
       this.mainObj.isWebOtpSupported = true;
       this.errorMessage = 'in otp window';
       window.addEventListener('DOMContentLoaded', (e) => {
         this.errorMessage = 'in otp DOMContentLoaded';
+        console.log('step 2 inside the dom otp');
+        debugger
         const input = document.querySelector(
           'input[autocomplete="one-time-code"]'
         );
         if (!input) return;
         const ac = new AbortController();
+        debugger
+        console.log('step 3 inside the controler');
         var reqObj = {
           otp: { transport: ['sms'], message: 'OTP for Aadhaar is ([0-9]{6})'}, // Replace the regex with your desired format
           signal: ac.signal,
         };
+        console.log('req obj',reqObj);
+        debugger
         navigator.credentials
           .get(reqObj)
           .then((otp: any) => {
+            console.log('step 4 inside get message');
             if (otp) {
+              console.log('step 5 inside the got otp');
               alert('in OTP window***' + otp);
               this.errorMessage = 'in otp credentials';
               const otpRegex = /OTP for Aadhaar is ([0-9]{6})/; // Replace the regex with your desired format
