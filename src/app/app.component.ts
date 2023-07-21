@@ -19,74 +19,63 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.errorMessage = 'in ngAfterViewInit';
-    console.log('step 1');
-    if ('OTPCredential' in window) {
+console.log('step 1');
+if ('OTPCredential' in window) {
+  this.mainObj.isWebOtpSupported = true;
+  this.errorMessage = 'in otp window';
+  window.addEventListener('DOMContentLoaded', (e) => {
+    this.errorMessage = 'in otp DOMContentLoaded';
+    console.log('step 2 inside the dom otp');
+    const input = document.querySelector(
+      'input[autocomplete="one-time-code"]'
+    );
+    // if (!input) return;
+    const ac = new AbortController();
+    console.log('step 3 inside the controler');
+    var reqObj = {
+      otp: { transport: ['sms'] }, // Replace the regex with your desired format
+      signal: ac.signal,
+    };
+    console.log('req obj', reqObj);
+    navigator.credentials
+      .get(reqObj)
+      .then((otp: any) => {
+        console.log('step 4 inside get message');
+        if (otp) {
+          console.log('step 5 inside the got otp');
+          alert('in OTP window***' + otp);
+          this.errorMessage = 'in otp credentials';
+          const aadhaarOtpRegex = /OTP for Aadhaar \(([A-Za-z0-9]+)\) is (\d+) \(valid for (\d+) mins\)/;
+          const taxBuddyOtpRegex = /#(\d+)/;
+          const aadhaarMatch = aadhaarOtpRegex.exec(otp.toString());
+          const taxBuddyMatch = taxBuddyOtpRegex.exec(otp.toString());
 
-      this.mainObj.isWebOtpSupported = true;
-      this.errorMessage = 'in otp window';
-      window.addEventListener('DOMContentLoaded', (e) => {
-        this.errorMessage = 'in otp DOMContentLoaded';
-        console.log('step 2 inside the dom otp');
-        debugger
-        const input = document.querySelector(
-          'input[autocomplete="one-time-code"]'
-        );
-        alert("above the return");
-        // if (!input) return;
-        const ac = new AbortController();
-        debugger
-        console.log('step 3 inside the controler');
-        var reqObj = {
-          otp: { transport: ['sms']}, // Replace the regex with your desired format
-          signal: ac.signal,
-        };
-        console.log('req obj',reqObj);
-        debugger
-        navigator.credentials
-          .get(reqObj)
-          .then((otp: any) => {
-            console.log('step 4 inside get message');
-            if (otp) {
-              console.log('step 5 inside the got otp');
-              alert('in OTP window***' + otp);
-              this.errorMessage = 'in otp credentials';
-              const otpRegex = /OTP for Aadhaar is ([0-9]{6})/; // Replace the regex with your desired format
-              const match = otpRegex.exec(otp.toString());
-              alert('GOT OTP***' + otp);
-              alert('Got match'+ match)
-              if (match && match[1]) {
-                const extractedOTP = match[1];
-                // Do something with the extractedOTP, e.g., assign it to an input field
-                (document.getElementById("otpInputId") as HTMLInputElement).value = extractedOTP;
-                this.myOTP = extractedOTP;
-                // Trigger the OTP submission, if needed
-                (document?.getElementById("otpButtonId") as any)?.click();
-                alert('GOT OTP***' + otp.code);
-              } else {
-                // Handle the case when OTP format doesn't match
-                this.errorMessage = 'OTP format not recognized.';
-              }
-            }
-          })
-          // .then((otp: any) => {
-          //   this.errorMessage = 'in otp credentials';
-          //   alert('GOT OTP***' + otp);
-          //   if (otp) {
-          //     if (otp && otp.code) {
-          //       alert('GOT OTP***' + otp.code);
-          //       this.myOTP = otp.code;
-          //     }
-          //   }
-          // })
-          .catch((err) => {
-            this.errorMessage = 'in otp error';
-            console.log(err);
-          })
-      });
-    } else {
-      this.mainObj.isWebOtpSupported = false;
-      this.errorMessage = 'out of otp window';
-    }
+          if (aadhaarMatch && aadhaarMatch[2]) {
+            const extractedOTP = aadhaarMatch[2];
+            // Do something with the extractedOTP for Aadhaar
+            // For example, you can set it to an input field or process it accordingly.
+            alert('GOT Aadhaar OTP***' + extractedOTP);
+          } else if (taxBuddyMatch && taxBuddyMatch[1]) {
+            const extractedOTP = taxBuddyMatch[1];
+            // Do something with the extractedOTP for TaxBuddy
+            // For example, you can set it to an input field or process it accordingly.
+            alert('GOT TaxBuddy OTP***' + extractedOTP);
+          } else {
+            // Handle the case when OTP format doesn't match for both providers
+            this.errorMessage = 'OTP format not recognized.';
+          }
+        }
+      })
+      .catch((err) => {
+        this.errorMessage = 'in otp error';
+        console.log(err);
+      })
+  });
+} else {
+  this.mainObj.isWebOtpSupported = false;
+  this.errorMessage = 'out of otp window';
+}
+
   }
   errorMessage: any = '';
 
