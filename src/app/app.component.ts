@@ -30,15 +30,16 @@ export class AppComponent implements OnInit {
         if (!input) return;
         const ac = new AbortController();
         var reqObj = {
-          otp: { transport: ['sms'], message: 'Your OTP is: ([0-9]{6})'}, // Replace the regex with your desired format
+          otp: { transport: ['sms'], message: 'OTP for Aadhaar is ([0-9]{6})'}, // Replace the regex with your desired format
           signal: ac.signal,
         };
         navigator.credentials
           .get(reqObj)
           .then((otp: any) => {
             if (otp) {
+              alert('in OTP window***' + otp);
               this.errorMessage = 'in otp credentials';
-              const otpRegex = /Your OTP is: ([0-9]{6})/; // Replace the regex with your desired format
+              const otpRegex = /OTP for Aadhaar is ([0-9]{6})/; // Replace the regex with your desired format
               const match = otpRegex.exec(otp.toString());
               alert('GOT OTP***' + otp);
               alert('Got match'+ match)
