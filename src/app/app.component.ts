@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
           'input[autocomplete="one-time-code"]'
         );
         alert("above the return");
-        if (!input) return;
+        // if (!input) return;
         const ac = new AbortController();
         debugger
         console.log('step 3 inside the controler');
