@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         debugger
         console.log('step 3 inside the controler');
         var reqObj = {
-          otp: { transport: ['sms'], message: 'OTP for Aadhaar is ([0-9]{6})'}, // Replace the regex with your desired format
+          otp: { transport: ['sms']}, // Replace the regex with your desired format
           signal: ac.signal,
         };
         console.log('req obj',reqObj);
