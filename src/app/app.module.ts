@@ -14,7 +14,8 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
-    FormsModule, ServiceWorkerModule.register('ngsw-worker.js', {
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: environment.production,
   // Register the ServiceWorker as soon as the application is stable
   // or after 30 seconds (whichever comes first).
